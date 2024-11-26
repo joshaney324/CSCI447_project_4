@@ -23,6 +23,9 @@ class Layer:
         if has_bias:
             self.node_list.append(Node([], True))
 
+    def get_layer_size(self):
+        return len(self.node_list)
+
     # This function takes in the values from the previous layer (or the input values for the network, if called on the
     # first layer), and returns the unactivated values for every node on the current layer.
     def feed_forward(self, inputs):

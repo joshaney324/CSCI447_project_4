@@ -16,7 +16,7 @@ def cross_validate_classification(data_folds, label_folds, tune_data, tune_label
     recall_avg = 0.0
     accuracy_avg = 0.0
     folds = len(data_folds)
-    network = Network(learning_rate, num_hidden_layers, hidden_layer_sizes, num_inputs, num_outputs, output_type,
+    network = Network(num_hidden_layers, hidden_layer_sizes, num_inputs, num_outputs, output_type,
                       biased_layers)
 
     # For each testing fold, set up a training and testing set and then append the loss function values
@@ -42,7 +42,7 @@ def cross_validate_classification(data_folds, label_folds, tune_data, tune_label
         test_labels = np.array(test_labels)
 
         # Train Network
-        network.train(train_data, train_labels, tune_data, tune_labels, max_iterations)
+        network.train(train_data, train_labels, tune_data, tune_labels, max_iterations, learning_rate)
 
         # Get all predictions
         predictions = []
@@ -81,7 +81,7 @@ def cross_validate_regression(data_folds, label_folds, tune_data, tune_labels, l
     # Set up variables
     mse_avg = 0.0
     folds = len(data_folds)
-    network = Network(learning_rate, num_hidden_layers, hidden_layer_sizes, num_inputs, num_outputs, output_type,
+    network = Network(num_hidden_layers, hidden_layer_sizes, num_inputs, num_outputs, output_type,
                       biased_layers)
 
     # For each testing fold, set up a training and testing set and then append the loss function values
@@ -107,7 +107,7 @@ def cross_validate_regression(data_folds, label_folds, tune_data, tune_labels, l
         test_labels = np.array(test_labels)
 
         # Train network
-        network.train(train_data, train_labels, tune_data, tune_labels, max_iterations)
+        network.train(train_data, train_labels, tune_data, tune_labels, max_iterations, learning_rate)
 
         # Get all predictions
         predictions = []
@@ -129,7 +129,7 @@ def cross_validate_tune_regression(data_folds, label_folds, test_data, test_labe
     # Set up variables
     mean_squared_error_avg = 0.0
     folds = len(data_folds)
-    network = Network(learning_rate, num_hidden_layers, hidden_layer_sizes, num_inputs, num_outputs, output_type,
+    network = Network(num_hidden_layers, hidden_layer_sizes, num_inputs, num_outputs, output_type,
                       biased_layers)
 
     # For each testing fold, set up a training and testing set and then append the loss function values
@@ -149,7 +149,7 @@ def cross_validate_tune_regression(data_folds, label_folds, test_data, test_labe
         test_labels = np.array(test_labels)
 
         # Train network
-        network.train(train_data, train_labels, test_data, test_labels, max_iterations)
+        network.train(train_data, train_labels, test_data, test_labels, max_iterations, learning_rate)
 
         # get predictions and append them
         predictions = []
@@ -181,7 +181,7 @@ def cross_validate_tune_classification(data_folds, label_folds, test_data, test_
     # For each testing fold, set up a training and testing set and then append the loss function values
     for i in range(len(data_folds)):
         hidden_layer_size = list(hidden_layer_sizes)
-        network = Network(learning_rate, num_hidden_layers, hidden_layer_size, num_inputs, num_outputs, output_type,
+        network = Network(num_hidden_layers, hidden_layer_size, num_inputs, num_outputs, output_type,
                           biased_layers)
         train_data = []
         train_labels = []
@@ -197,7 +197,7 @@ def cross_validate_tune_classification(data_folds, label_folds, test_data, test_
         test_data = np.array(test_data)
         test_labels = np.array(test_labels)
 
-        network.train(train_data, train_labels, test_data, test_labels, max_iterations)
+        network.train(train_data, train_labels, test_data, test_labels, max_iterations, learning_rate)
 
         predictions = []
 

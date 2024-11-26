@@ -6,11 +6,11 @@ import math
 
 
 class Network:
-    def __init__(self, learning_rate, num_hidden_layers, hidden_layer_sizes, num_inputs, num_outputs, output_type, biased_layers):
+    def __init__(self, num_hidden_layers, hidden_layer_sizes, num_inputs, num_outputs, output_type, biased_layers):
         # self.max_train_iterations = max_train_iterations
         self.layers = []
-        self.learning_rate = learning_rate
         self.output_type = output_type
+        self.num_inputs = num_inputs
 
         # set up hidden layers
         for i in range(num_hidden_layers):
@@ -38,6 +38,7 @@ class Network:
                 self.layers.append(Layer(num_outputs, hidden_layer_sizes[-1], False))
         else:
             self.layers.append(Layer(num_outputs, num_inputs, False))
+
 
     # This function carries out the forward pass of the network; it takes in a single instance's features and returns
     # the value of each node in the network.
@@ -83,7 +84,7 @@ class Network:
     # This brings all other functions together. Given the features of a single instance and that instance's label, it
     # calculates the layer values for every node given the input, calculates the error for each node given the actual
     # and expected outputs, calculates the changes to the network's weights given those values, and updates the weights.
-    def backpropogation(self, inputs, expected_outputs):
+    def backpropogation(self, inputs, expected_outputs, learning_rate):
         # Get the values of each node in the network for the input and check that the values are valid.
         layer_vals = self.feedforward(inputs)
         for layer_val in layer_vals:
@@ -98,29 +99,29 @@ class Network:
         # check that the network has at least two layers (first hidden layer is distinct from the output layer)
         if len(self.layers) > 1:
             # get the weight changes for the weights to the first hidden layer
-            layer_weight_updates = self.layers[0].get_weight_updates(self.learning_rate, False, error_vals[0],
+            layer_weight_updates = self.layers[0].get_weight_updates(learning_rate, False, error_vals[0],
                                                                      layer_vals[0], inputs)
             weight_updates.append(layer_weight_updates)
             # get the weight changes for the weights to the remaining hidden layers
             for k in range(1, len(self.layers) - 1):
-                layer_weight_updates = self.layers[k].get_weight_updates(self.learning_rate, False, error_vals[k],
+                layer_weight_updates = self.layers[k].get_weight_updates(learning_rate, False, error_vals[k],
                                                                          layer_vals[k], layer_vals[k-1])
                 weight_updates.append(layer_weight_updates)
             #get the weight changes for the weights to the output layer
-            layer_weight_updates = self.layers[-1].get_weight_updates(self.learning_rate, True, error_vals[-1],
+            layer_weight_updates = self.layers[-1].get_weight_updates(learning_rate, True, error_vals[-1],
                                                                       layer_vals[-1], layer_vals[-2])
             weight_updates.append(layer_weight_updates)
         # if there are not at least two layers, and therefore the first (non-input) layer is the output layer, get the
         # weight updates for the weights to our one layer
         if len(self.layers) == 1:
-            layer_weight_updates = self.layers[0].get_weight_updates(self.learning_rate, True, error_vals[0],
+            layer_weight_updates = self.layers[0].get_weight_updates(learning_rate, True, error_vals[0],
                                                                      layer_vals[0], inputs)
             weight_updates.append(layer_weight_updates)
         # update weights using the changes calculated above
         for i, layer in enumerate(self.layers):
             layer.update_weights(weight_updates[i])
 
-    def train(self, data, labels, test_data, test_labels, max_iterations):
+    def train(self, data, labels, test_data, test_labels, max_iterations, learning_rate):
 
         # If the depending on the network type set up the best metric and folds accordingly
         best_metric = None
@@ -134,7 +135,7 @@ class Network:
             # print("-------------------------------------------------------------------------")
             # Train for an epoch
             for datapoint, label in zip(data, labels):
-                self.backpropogation(datapoint, label)
+                self.backpropogation(datapoint, label, learning_rate)
 
             # Check if the network performed better or converged. If the network converged, stop training and return
             if self.output_type == 'classification':
@@ -180,4 +181,34 @@ class Network:
                     prediction[j] = 0
 
         return prediction
+
+    def fitness_function(self, data, labels):
+        predictions = []
+        for datum in data:
+            predictions.append(self.predict(datum))
+
+        if self.output_type == 'classification':
+            accuracies, _ = accuracy(predictions, labels)
+            acc_avg = 0.0
+            for i in accuracies:
+                acc_avg += i[1]
+
+            acc_avg = acc_avg / len(accuracies)
+
+            return 1 - acc_avg
+        elif self.output_type == 'regression':
+            return mean_squared_error(predictions, labels, len(predictions))
+
+    def update_weights(self, weight_vector):
+        counter = 0
+
+        for i in range(len(self.layers)):
+            for j in range(len(self.layers[i].node_list)):
+                node_weight_size = len(self.layers[i].node_list[j].weights)
+                for x in range(node_weight_size):
+
+                    self.layers[i].node_list[j].weights[x] = weight_vector[counter]
+                    counter += 1
+
+
 
