@@ -10,6 +10,7 @@ from CrossValidateFunctions import cross_validate_classification, cross_validate
 from ForestFires import ForestFiresSet
 from GeneticAlgorithm import GeneticAlgorithm
 from Network import Network
+from src.DiffEvolution import DiffEvolution
 
 # The process for testing a dataset will be the same for all. The comments on the first will apply to the rest
 
@@ -34,11 +35,16 @@ test_data, test_labels, train_data, train_labels = get_tune_folds(data_folds, la
 
 ga = GeneticAlgorithm(0.1, 20, 1, len(train_data[0]), len(train_labels[0]), [], "classification", train_data,
                       train_labels)
+de = DiffEvolution(0.1, 0.4, 20, 1, len(train_data[0]), len(train_labels[0]), [], "classification", train_data,
+                      train_labels)
+
+de_weight_vector = de.train(200)
 
 weight_vector = ga.train(10, 200)
 
 network = Network(0, [], len(train_data[0]), len(train_labels[0]), "classification", [])
 network.update_weights(weight_vector)
 print(network.fitness_function(test_data, test_labels))
-
+network.update_weights(de_weight_vector)
+print(network.fitness_function(test_data, test_labels))
 
