@@ -21,30 +21,34 @@ print("Soy Bean")
 # No layers
 
 # Set up dataset class and collect data and labels
-soy = GlassSet(7)
+soy = MachineSet()
 data = soy.get_data()
 labels = soy.get_labels()
 labels = labels.reshape(-1, 1)
-labels = binary_encoding(labels, [0])
+# labels = binary_encoding(labels, [0])
 
 # Get folds before getting hold out tune fold
-data_folds, label_folds = get_folds_classification(data, labels, 10)
+data_folds, label_folds = get_folds_regression(data, labels, 10)
 
 # Get tuning fold
 test_data, test_labels, train_data, train_labels = get_tune_folds(data_folds, label_folds)
 
-ga = GeneticAlgorithm(0.1, 20, 1, len(train_data[0]), len(train_labels[0]), [], "classification", train_data,
+ga = GeneticAlgorithm(0.08, 0.9, 50, 400, len(train_data[0]), 1, [], "regression", train_data,
                       train_labels)
-de = DiffEvolution(0.1, 0.4, 20, 1, len(train_data[0]), len(train_labels[0]), [], "classification", train_data,
+de = DiffEvolution(0.05, 0.9, 50, 1, len(train_data[0]), 1, [], "regression", train_data,
                       train_labels)
 
-de_weight_vector = de.train(200)
+de_weight_vector = de.train(50)
 
-weight_vector = ga.train(10, 200)
-
-network = Network(0, [], len(train_data[0]), len(train_labels[0]), "classification", [])
-network.update_weights(weight_vector)
-print(network.fitness_function(test_data, test_labels))
+network = Network(0, [], len(train_data[0]), 1, "regression", [])
 network.update_weights(de_weight_vector)
 print(network.fitness_function(test_data, test_labels))
+
+
+weight_vector = ga.train(25)
+
+network = Network(0, [], len(train_data[0]), 1, "regression", [])
+network.update_weights(weight_vector)
+print(network.fitness_function(test_data, test_labels))
+
 

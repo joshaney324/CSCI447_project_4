@@ -3,7 +3,8 @@ import random as random
 import numpy as np
 
 
-def cross_over(self, individual1, individual2):
+# Cross over for continuous values
+def cross_over(individual1, individual2):
     new_individual = []
     for i in range(len(individual1)):
         new_individual.append(individual1[i] + individual2[i] / 2)
@@ -11,17 +12,22 @@ def cross_over(self, individual1, individual2):
     return new_individual
 
 
-def mutate(individual, sigma):
+# Mutation for an individual
+def mutate(individual, sigma, mutation_rate):
     new_individual = []
     for val in individual:
-        new_individual.append(val + np.random.normal(0, sigma))
+        if mutation_rate > random.random():
+            new_individual.append(val + np.random.normal(0, sigma))
+        else:
+            new_individual.append(val)
 
     return new_individual
 
 
 class GeneticAlgorithm:
-    def __init__(self, mutation_rate, population_size, max_generations, num_inputs, num_outputs, hidden_layer_sizes,
+    def __init__(self, mutation_rate, crossover_rate, population_size, max_generations, num_inputs, num_outputs, hidden_layer_sizes,
                  network_type, fitness_data, fitness_labels):
+        self.crossover_rate = crossover_rate
         self.mutation_rate = mutation_rate
         self.population_size = population_size
         self.max_generations = max_generations
@@ -35,9 +41,11 @@ class GeneticAlgorithm:
         self.fitness_labels = fitness_labels
         self.fitness_data = fitness_data
 
+        # Set up network to test with when training
         self.network = Network(len(hidden_layer_sizes), hidden_layer_sizes, num_inputs, num_outputs, network_type, [])
 
-        for i in range(population_size):
+        # Create all individuals. This is done by creating a weight vector that can be used to update a network
+        for z in range(population_size):
             individual = []
             for i in range(len(self.network.layers)):
                 for j in range(len(self.network.layers[i].node_list)):
@@ -49,6 +57,7 @@ class GeneticAlgorithm:
 
         self.recalculate_fitness()
 
+    # Selection by a tournament
     def selection(self, tournament_size):
         individuals = []
 
@@ -68,6 +77,7 @@ class GeneticAlgorithm:
 
         return individuals
 
+    # Update the fitness dictionary to have all the individual indexes in the population and then their fitness
     def recalculate_fitness(self):
 
         self.fitness_dict = {}
@@ -82,32 +92,39 @@ class GeneticAlgorithm:
 
         self.sorted_individuals = new_sorted_individuals
 
-    def mutate_population(self):
-        for i in range(len(self.population)):
-            if random.random() < self.mutation_rate:
-                self.population[i] = mutate(self.population[i], 0.5)
-
-    def train(self, tournament_size, max_iterations):
-        for i in range(max_iterations):
-            print(i)
-            self.mutate_population()
+    def train(self, tournament_size):
+        for i in range(self.max_generations):
+            # print(i)
+            # Select 2 individuals
             selected_individuals = self.selection(tournament_size)
-            for individual in selected_individuals:
-                self.population.append(individual)
+            new_individual = None
+
+            # If cross over, cross over the two individuals and then mutate the new individual. Then add it to the
+            # population
+            if self.crossover_rate > random.random():
+                new_individual = cross_over(selected_individuals[0], selected_individuals[1])
+
+            # If no cross over, mutate the two parents and add them to the population
+            if new_individual is not None:
+                mutated_individual = mutate(new_individual, .5, self.mutation_rate)
+                self.population.append(mutated_individual)
+            else:
+                self.population.append(mutate(selected_individuals[1], .5, self.mutation_rate))
+                self.population.append(mutate(selected_individuals[0], .5, self.mutation_rate))
 
             self.recalculate_fitness()
 
-            # new_population_keys = [key for key, value in sorted(self.fitness_dict.items(), key=lambda x: x[1])[3:]]
-            #
-            # new_population = []
-            # for key in new_population_keys:
-            #     new_population.append(self.population[key])
-            #
-            # self.population = new_population
+            # Remove the worst performing individuals
+            if len(self.population) == self.population_size + 1:
+                self.population = self.sorted_individuals[:-1]
+            else:
+                self.population = self.sorted_individuals[:-2]
 
-            self.population = self.sorted_individuals[:-2]
             self.recalculate_fitness()
-            print(max(self.fitness_dict.values()))
+
+            # print(len(self.population))
+
+            # Repeat
 
         return self.sorted_individuals[0]
 

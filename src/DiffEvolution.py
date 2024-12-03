@@ -34,13 +34,11 @@ class DiffEvolution:
             self.network.update_weights(individual)
             self.fitnesses.append(self.network.fitness_function(self.fitness_data, self.fitness_labels))
 
-
     def mutate(self, base_vector, vector_2, vector_3):
         donor_vector = []
         for i in range(len(base_vector)):
             donor_vector.append(base_vector[i] + self.mutation_rate * (vector_2 - vector_3[i]))
         return donor_vector
-
 
     def cross_over(self, donor_vector, base_vector):
         offspring_vector = []
