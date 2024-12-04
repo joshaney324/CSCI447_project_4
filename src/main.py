@@ -11,6 +11,9 @@ from ForestFires import ForestFiresSet
 from GeneticAlgorithm import GeneticAlgorithm
 from Network import Network
 from src.DiffEvolution import DiffEvolution
+import numpy as np
+
+from src.ParticleSwarm import ParticleSwarm
 
 # The process for testing a dataset will be the same for all. The comments on the first will apply to the rest
 
@@ -33,10 +36,21 @@ data_folds, label_folds = get_folds_regression(data, labels, 10)
 # Get tuning fold
 test_data, test_labels, train_data, train_labels = get_tune_folds(data_folds, label_folds)
 
+
+min_velocity = np.ones(len(train_data[0])) * -0.1
+max_velocity = np.ones(len(train_data[0])) * 0.1
+pso = ParticleSwarm(50, 0.7, 1.49, 1.49, max_velocity, min_velocity, len(train_data[0]), 1, [], "regression", train_data,
+                      train_labels)
 ga = GeneticAlgorithm(0.08, 0.9, 50, 400, len(train_data[0]), 1, [], "regression", train_data,
                       train_labels)
 de = DiffEvolution(0.05, 0.9, 50, 1, len(train_data[0]), 1, [], "regression", train_data,
                       train_labels)
+
+pso_weight_vector = pso.train(1000)
+
+network = Network(0, [], len(train_data[0]), 1, "regression", [])
+network.update_weights(pso_weight_vector)
+print(network.fitness_function(test_data, test_labels))
 
 de_weight_vector = de.train(50)
 

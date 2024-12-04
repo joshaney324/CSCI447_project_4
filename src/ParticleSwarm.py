@@ -6,15 +6,14 @@ from Network import Network
 
 
 class ParticleSwarm:
-    def __init__(self, population_size, inertia, personal_weight, global_weight, max_velocity, min_velocity,  max_iterations, num_inputs, num_outputs, hidden_layer_sizes,
+    def __init__(self, population_size, inertia, personal_weight, global_weight, max_velocity, min_velocity, num_inputs, num_outputs, hidden_layer_sizes,
                  network_type, fitness_data, fitness_labels):
         self.population_size = population_size
         self.inertia = inertia
         self.personal_weight = personal_weight
         self.global_weight = global_weight
-        self.max_velocity = max_velocity
-        self.min_velocity = min_velocity
-        self.max_iterations = max_iterations
+        self.max_velocity = np.array(max_velocity)
+        self.min_velocity = np.array(min_velocity)
         self.num_inputs = num_inputs
         self.num_outputs = num_outputs
         self.hidden_layer_sizes = hidden_layer_sizes
@@ -56,8 +55,11 @@ class ParticleSwarm:
             if fitness < self.global_best_fitness:
                 self.global_best_position = self.population[i].position
                 self.global_best_fitness = fitness
-            ## Mostly done -- think it needs some more steps
 
+    def train(self, max_iterations):
+        for i in range(max_iterations):
+            self.update()
+        return self.global_best_position
 
 class Particle:
     def __init__(self, position, fitness, max_velocity, min_velocity, inertia, personal_weight, global_weight):
@@ -70,9 +72,7 @@ class Particle:
         self.inertia = inertia
         self.personal_weight = personal_weight
         self.global_weight = global_weight
-        for i in range(len(self.position)):
-            velocity_val = random.uniform(self.min_velocity[i], self.max_velocity[i])
-            self.velocity.append(velocity_val)
+        self.velocity = np.random.uniform(self.min_velocity, self.max_velocity) * 0.5
 
     def update_best(self, best_position, best_fitness):
         self.best_position = best_position
@@ -89,3 +89,8 @@ class Particle:
         personal_best = np.array(self.best_position)
         global_best = np.array(global_best)
         self.velocity = (self.inertia * velocity) + (personal_rand * self.personal_weight * (personal_best - position)) + (global_rand * self.global_weight * (global_best - position))
+        for i in range(len(self.velocity)):
+            if self.velocity[i] < self.min_velocity[i]:
+                self.velocity[i] = self.min_velocity[i]
+            elif self.velocity[i] > self.max_velocity[i]:
+                self.velocity[i] = self.max_velocity[i]
