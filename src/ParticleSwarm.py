@@ -1,15 +1,17 @@
 import random
+import sys
 
+import numpy as np
 from Network import Network
 
 
 class ParticleSwarm:
-    def __init__(self, population_size, inertia, personalWeight, globalWeight, max_velocity, min_velocity,  max_iterations, num_inputs, num_outputs, hidden_layer_sizes,
+    def __init__(self, population_size, inertia, personal_weight, global_weight, max_velocity, min_velocity,  max_iterations, num_inputs, num_outputs, hidden_layer_sizes,
                  network_type, fitness_data, fitness_labels):
         self.population_size = population_size
         self.inertia = inertia
-        self.personalWeight = personalWeight
-        self.globalWeight = globalWeight
+        self.personal_weight = personal_weight
+        self.global_weight = global_weight
         self.max_velocity = max_velocity
         self.min_velocity = min_velocity
         self.max_iterations = max_iterations
@@ -24,6 +26,8 @@ class ParticleSwarm:
 
         self.network = Network(len(hidden_layer_sizes), hidden_layer_sizes, num_inputs, num_outputs, network_type, [])
 
+        self.global_best_position = []
+        self.global_best_fitness = np.inf
         for i in range(population_size):
             position = []
             for j in range(len(self.network.layers)):
@@ -34,19 +38,38 @@ class ParticleSwarm:
 
             self.network.update_weights(position)
             fitness = self.network.fitness_function(self.fitness_data, self.fitness_labels)
-            particle = Particle(position, fitness, max_velocity, min_velocity)
+            particle = Particle(position, fitness, max_velocity, min_velocity, inertia, personal_weight, global_weight)
             self.population.append(particle)
+            if fitness < self.global_best_fitness:
+                self.global_best_position = position
+                self.global_best_fitness = fitness
+
+
+    def update(self):
+        for i in range(len(self.population)):
+            self.population[i].update_velocity(self.global_best_position)
+            self.population[i].update_position()
+            self.network.update_weights(self.population[i].position)
+            fitness = self.network.fitness_function(self.fitness_data, self.fitness_labels)
+            if fitness < self.population[i].best_fitness:
+                self.population[i].update_best(self.population[i].position, fitness)
+            if fitness < self.global_best_fitness:
+                self.global_best_position = self.population[i].position
+                self.global_best_fitness = fitness
+            ## Mostly done -- think it needs some more steps
+
 
 class Particle:
-    def __init__(self, position, fitness, max_velocity, min_velocity, personalWeight, globalWeight):
+    def __init__(self, position, fitness, max_velocity, min_velocity, inertia, personal_weight, global_weight):
         self.position = position
         self.best_position = position
         self.best_fitness = fitness
         self.velocity = []
         self.max_velocity = max_velocity
         self.min_velocity = min_velocity
-        self.personalWeight = personalWeight
-        self.globalWeight = globalWeight
+        self.inertia = inertia
+        self.personal_weight = personal_weight
+        self.global_weight = global_weight
         for i in range(len(self.position)):
             velocity_val = random.uniform(self.min_velocity[i], self.max_velocity[i])
             self.velocity.append(velocity_val)
@@ -57,3 +80,12 @@ class Particle:
 
     def update_position(self):
         self.position = self.position + self.velocity
+
+    def update_velocity(self, global_best):
+        personal_rand = random.random()
+        global_rand = random.random()
+        position = np.array(self.position)
+        velocity = np.array(self.velocity)
+        personal_best = np.array(self.best_position)
+        global_best = np.array(global_best)
+        self.velocity = (self.inertia * velocity) + (personal_rand * self.personal_weight * (personal_best - position)) + (global_rand * self.global_weight * (global_best - position))
