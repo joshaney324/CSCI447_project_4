@@ -218,6 +218,7 @@ class Network:
                 node_weight_size = len(self.layers[i].node_list[j].weights)
                 for x in range(node_weight_size):
                     counter += 1
+        return counter
 
 
 

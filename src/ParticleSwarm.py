@@ -12,8 +12,6 @@ class ParticleSwarm:
         self.inertia = inertia
         self.personal_weight = personal_weight
         self.global_weight = global_weight
-        self.max_velocity = np.array(max_velocity)
-        self.min_velocity = np.array(min_velocity)
         self.num_inputs = num_inputs
         self.num_outputs = num_outputs
         self.hidden_layer_sizes = hidden_layer_sizes
@@ -24,6 +22,9 @@ class ParticleSwarm:
         self.fitness_data = fitness_data
 
         self.network = Network(len(hidden_layer_sizes), hidden_layer_sizes, num_inputs, num_outputs, network_type, [])
+
+        self.max_velocity = np.ones(self.network.get_weight_vec_size()) * max_velocity
+        self.min_velocity = np.ones(self.network.get_weight_vec_size()) * min_velocity
 
         self.global_best_position = []
         self.global_best_fitness = np.inf
@@ -37,7 +38,7 @@ class ParticleSwarm:
 
             self.network.update_weights(position)
             fitness = self.network.fitness_function(self.fitness_data, self.fitness_labels)
-            particle = Particle(position, fitness, max_velocity, min_velocity, inertia, personal_weight, global_weight)
+            particle = Particle(position, fitness, self.max_velocity, self.min_velocity, inertia, personal_weight, global_weight)
             self.population.append(particle)
             if fitness < self.global_best_fitness:
                 self.global_best_position = position
