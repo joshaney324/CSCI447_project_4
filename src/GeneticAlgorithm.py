@@ -122,7 +122,7 @@ class GeneticAlgorithm:
 
             self.recalculate_fitness()
 
-            # print(len(self.population))
+            # print(max(self.fitness_dict.values()))
 
             # Repeat
 

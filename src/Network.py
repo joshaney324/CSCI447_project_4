@@ -210,5 +210,14 @@ class Network:
                     self.layers[i].node_list[j].weights[x] = weight_vector[counter]
                     counter += 1
 
+    def get_weight_vec_size(self):
+        counter = 0
+
+        for i in range(len(self.layers)):
+            for j in range(len(self.layers[i].node_list)):
+                node_weight_size = len(self.layers[i].node_list[j].weights)
+                for x in range(node_weight_size):
+                    counter += 1
+
 
 

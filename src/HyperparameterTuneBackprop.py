@@ -2,14 +2,16 @@ from itertools import permutations
 
 import numpy as np
 
+from src.GeneticAlgorithm import GeneticAlgorithm
+
 
 # This function is meant to tune the classification neural network model. It takes in datafolds, labels folds, a
 # test/tune set it also takes a list hyperparameters to test in the grid search
 
 
-def hyperparameter_tune_classification(data_folds, label_folds, test_data, test_labels, num_hidden_layers, num_inputs,
+def hyperparameter_tune_classification_backprop(data_folds, label_folds, test_data, test_labels, num_hidden_layers, num_inputs,
                                        num_outputs, max_iterations, learning_rates, all_hidden_layer_sizes):
-    from CrossValidateFunctions import (cross_validate_tune_classification)
+    from CrossValidateFunctionsBackProp import (cross_validate_tune_classification)
 
     # set up best value variables
     avg_metric = 0.0
@@ -34,9 +36,9 @@ def hyperparameter_tune_classification(data_folds, label_folds, test_data, test_
 
 # This function is meant to tune the regression neural network model. It takes in datafolds, labels folds, a
 # test/tune set it also takes a list hyperparameters to test in the grid search
-def hyperparameter_tune_regression(data_folds, label_folds, test_data, test_labels, num_hidden_layers, num_inputs,
+def hyperparameter_tune_regression_backprop(data_folds, label_folds, test_data, test_labels, num_hidden_layers, num_inputs,
                                    num_outputs, max_iterations, learning_rates, all_hidden_layer_sizes):
-    from CrossValidateFunctions import (cross_validate_tune_regression)
+    from CrossValidateFunctionsBackProp import (cross_validate_tune_regression)
 
     # set up best value variables
     avg_metric = np.inf
@@ -58,3 +60,7 @@ def hyperparameter_tune_regression(data_folds, label_folds, test_data, test_labe
                 hidden_layer_sizes = layer_perm
 
     return learning_rate, hidden_layer_sizes
+
+
+
+

@@ -88,7 +88,7 @@ class Particle:
         velocity = np.array(self.velocity)
         personal_best = np.array(self.best_position)
         global_best = np.array(global_best)
-        self.velocity = (self.inertia * velocity) + (personal_rand * self.personal_weight * (personal_best - position)) + (global_rand * self.global_weight * (global_best - position))
+        self.velocity = (self.inertia * velocity) + (self.inertia * velocity) + (global_rand * self.global_weight * (global_best - position))
         for i in range(len(self.velocity)):
             if self.velocity[i] < self.min_velocity[i]:
                 self.velocity[i] = self.min_velocity[i]
