@@ -73,7 +73,7 @@ def cross_validate_classification_ga(data_folds, label_folds, crossover_rate, mu
             accuracy_vals.append(val[1])
 
         accuracy_avg += np.mean(accuracy_vals)
-        print(str(datetime.datetime.now()))
+        # print(str(datetime.datetime.now()))
         # Print final accuracy and return
     # print(str(datetime.datetime.now()) + " Final Accuracy value: " + str(accuracy_avg / folds))
     return [precision_avg / folds, recall_avg / folds, accuracy_avg / folds]
@@ -127,10 +127,10 @@ def cross_validate_regression_ga(data_folds, label_folds, crossover_rate, mutati
         predictions = []
         for datapoint in test_data:
             predictions.append(network.predict(datapoint))
-        print(mean_squared_error(test_labels, predictions, len(predictions)))
+        # print(mean_squared_error(test_labels, predictions, len(predictions)))
         mse_avg += mean_squared_error(test_labels, predictions, len(predictions))
     # print mse average and return it
-    print(str(datetime.datetime.now()) + " Final mse value: " + str(mse_avg / folds))
+    # print(str(datetime.datetime.now()) + " Final mse value: " + str(mse_avg / folds))
     return mse_avg / folds
 
 

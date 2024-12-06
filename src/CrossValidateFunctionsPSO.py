@@ -80,11 +80,12 @@ def cross_validate_classification_pso(data_folds, label_folds, inertia, personal
 
         accuracy_avg += np.mean(accuracy_vals)
         # Print final accuracy and return
+        # print("1")
         # print(str(datetime.datetime.now()) + " Final Accuracy value: " + str(accuracy_avg / folds))
     return [precision_avg / folds, recall_avg / folds, accuracy_avg / folds]
 
 
-def cross_validate_regression(data_folds, label_folds, inertia, personal_weight, global_weight, max_velocity,
+def cross_validate_regression_pso(data_folds, label_folds, inertia, personal_weight, global_weight, max_velocity,
                               min_velocity, hidden_layer_sizes, num_inputs, num_outputs, output_type,
                               max_iterations, population_size):
     from Network import Network
@@ -120,8 +121,8 @@ def cross_validate_regression(data_folds, label_folds, inertia, personal_weight,
 
         # Train network
         pso = ParticleSwarm(population_size, inertia, personal_weight, global_weight, max_velocity, min_velocity,
-                            len(train_data[0]), 1, hidden_layer_sizes, "regression", train_data,
-                            train_labels)
+                           len(train_data[0]), 1, hidden_layer_sizes, "regression", train_data,
+                           train_labels)
 
         weight_vector = pso.train(max_iterations)
 
@@ -227,8 +228,8 @@ def cross_validate_tune_classification(data_folds, label_folds, tune_data, tune_
         network = Network(len(hidden_layer_sizes), hidden_layer_sizes, num_inputs, num_outputs, output_type,
                           [])
 
-        pso = ParticleSwarm(population_size, inertia, personal_weight, global_weight, np.ones(network.get_weight_vec_size()) * max_velocity, np.ones(network.get_weight_vec_size()) * min_velocity,
-                            num_inputs, num_outputs, hidden_layer_sizes, "classification", train_data,
+        pso = ParticleSwarm(population_size, inertia, personal_weight, global_weight, max_velocity, min_velocity, len(train_data[0]), len(train_labels[0]),
+                            hidden_layer_sizes, "classification", train_data,
                             train_labels)
 
         weight_vector = pso.train(max_iterations)
