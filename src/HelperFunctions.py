@@ -67,61 +67,61 @@ def test_classification_dataset(dataset, one_hidden_layer_size, two_hidden_layer
     #                                           tournament_sizes, [], 200, data_folds, label_folds,
     #                                           tune_data, tune_labels))
 
-    print("Zero Layers GA:")
-    print(cross_validate_classification_ga(test_data_folds, test_label_folds, .9, 0.01,
-                                           [], len(test_data_folds[0][0]), len(test_label_folds[0][0]),
-                                           "classification", 1, 20, 10))
-
-    # best_crossover_rate, best_mutation_rate, best_population_size, best_tournament_size = (
-    #     hyperparameter_tune_classification_ga(crossover_rates, mutation_rates, population_sizes,
-    #                                           tournament_sizes, [8], 200, data_folds, label_folds,
-    #                                           tune_data, tune_labels))
+    # print("Zero Layers GA:")
+    # print(cross_validate_classification_ga(test_data_folds, test_label_folds, .9, 0.01,
+    #                                        [], len(test_data_folds[0][0]), len(test_label_folds[0][0]),
+    #                                        "classification", 75, 20, 10))
     #
-    print("One Layer GA:")
-    print(cross_validate_classification_ga(test_data_folds, test_label_folds, .9, 0.05,
-                                           one_hidden_layer_size, len(test_data_folds[0][0]), len(test_label_folds[0][0]),
-                                           "classification", 1, 20, 10))
-
-    # best_crossover_rate, best_mutation_rate, best_population_size, best_tournament_size = (
-    #     hyperparameter_tune_classification_ga(crossover_rates, mutation_rates, population_sizes,
-    #                                           tournament_sizes, [2, 3], 200, data_folds, label_folds,
-    #                                           tune_data, tune_labels))
-
-    print("Two Layers GA:")
-    print(cross_validate_classification_ga(test_data_folds, test_label_folds, .9, 0.01,
-                                           two_hidden_layer_size, len(test_data_folds[0][0]), len(test_label_folds[0][0]),
-                                           "classification", 1, 20, 10))
-
-    # DIFFERENTIAL EVOLUTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    # best_crossover_rate, best_mutation_rate, best_population_size = (
-    #     hyperparameter_tune_classification_de(crossover_rates, mutation_rates, population_sizes, [], 1,
-    #                                           data_folds, label_folds, tune_data, tune_labels))
-
-    print("Zero Layers DE:")
-    print(cross_validate_classification_de(test_data_folds, test_label_folds, .9, 0.01,
-                                           [], len(test_data_folds[0][0]), len(test_label_folds[0][0]),
-                                           "classification", 1, 20))
-
-    # best_crossover_rate, best_mutation_rate, best_population_size = (
-    #     hyperparameter_tune_classification_de(crossover_rates, mutation_rates, population_sizes,
-    #                                         [15], 200, data_folds, label_folds,
-    #                                           tune_data, tune_labels))
-
-    print("One Layer DE:")
-    print(cross_validate_classification_de(test_data_folds, test_label_folds, .8, 0.01,
-                                           one_hidden_layer_size, len(test_data_folds[0][0]), len(test_label_folds[0][0]),
-                                           "classification", 1, 20))
-
-    # best_crossover_rate, best_mutation_rate, best_population_size = (
-    #     hyperparameter_tune_classification_de(crossover_rates, mutation_rates, population_sizes,
-    #                                           [5, 10], 200, data_folds, label_folds,
-    #                                           tune_data, tune_labels))
-
-    print("Two Layers DE:")
-    print(cross_validate_classification_de(test_data_folds, test_label_folds, .9, 0.01,
-                                           two_hidden_layer_size, len(test_data_folds[0][0]), len(test_label_folds[0][0]),
-                                           "classification", 1, 20))
+    # # best_crossover_rate, best_mutation_rate, best_population_size, best_tournament_size = (
+    # #     hyperparameter_tune_classification_ga(crossover_rates, mutation_rates, population_sizes,
+    # #                                           tournament_sizes, [8], 200, data_folds, label_folds,
+    # #                                           tune_data, tune_labels))
+    # #
+    # print("One Layer GA:")
+    # print(cross_validate_classification_ga(test_data_folds, test_label_folds, .9, 0.05,
+    #                                        one_hidden_layer_size, len(test_data_folds[0][0]), len(test_label_folds[0][0]),
+    #                                        "classification", 75, 20, 10))
+    #
+    # # best_crossover_rate, best_mutation_rate, best_population_size, best_tournament_size = (
+    # #     hyperparameter_tune_classification_ga(crossover_rates, mutation_rates, population_sizes,
+    # #                                           tournament_sizes, [2, 3], 200, data_folds, label_folds,
+    # #                                           tune_data, tune_labels))
+    #
+    # print("Two Layers GA:")
+    # print(cross_validate_classification_ga(test_data_folds, test_label_folds, .9, 0.01,
+    #                                        two_hidden_layer_size, len(test_data_folds[0][0]), len(test_label_folds[0][0]),
+    #                                        "classification", 75, 20, 10))
+    #
+    # # DIFFERENTIAL EVOLUTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #
+    # # best_crossover_rate, best_mutation_rate, best_population_size = (
+    # #     hyperparameter_tune_classification_de(crossover_rates, mutation_rates, population_sizes, [], 1,
+    # #                                           data_folds, label_folds, tune_data, tune_labels))
+    #
+    # print("Zero Layers DE:")
+    # print(cross_validate_classification_de(test_data_folds, test_label_folds, .9, 0.01,
+    #                                        [], len(test_data_folds[0][0]), len(test_label_folds[0][0]),
+    #                                        "classification", 75, 20))
+    #
+    # # best_crossover_rate, best_mutation_rate, best_population_size = (
+    # #     hyperparameter_tune_classification_de(crossover_rates, mutation_rates, population_sizes,
+    # #                                         [15], 200, data_folds, label_folds,
+    # #                                           tune_data, tune_labels))
+    #
+    # print("One Layer DE:")
+    # print(cross_validate_classification_de(test_data_folds, test_label_folds, .8, 0.01,
+    #                                        one_hidden_layer_size, len(test_data_folds[0][0]), len(test_label_folds[0][0]),
+    #                                        "classification", 75, 20))
+    #
+    # # best_crossover_rate, best_mutation_rate, best_population_size = (
+    # #     hyperparameter_tune_classification_de(crossover_rates, mutation_rates, population_sizes,
+    # #                                           [5, 10], 200, data_folds, label_folds,
+    # #                                           tune_data, tune_labels))
+    #
+    # print("Two Layers DE:")
+    # print(cross_validate_classification_de(test_data_folds, test_label_folds, .9, 0.01,
+    #                                        two_hidden_layer_size, len(test_data_folds[0][0]), len(test_label_folds[0][0]),
+    #                                        "classification", 1, 20))
 
     # # Particle Swarm Optimization!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #
@@ -135,7 +135,7 @@ def test_classification_dataset(dataset, one_hidden_layer_size, two_hidden_layer
     print("PSO zero Hidden Layers")
     print(cross_validate_classification_pso(data_folds, label_folds, .7, 1.49, 1.49,
                                             .1, -.1, [], len(test_data_folds[0][0]),
-                                            len(test_label_folds[0][0]), "classification", 1, 50))
+                                            len(test_label_folds[0][0]), "classification", 75, 50))
     #
     #
     #
@@ -148,7 +148,7 @@ def test_classification_dataset(dataset, one_hidden_layer_size, two_hidden_layer
     print("PSO one Hidden Layers")
     print(cross_validate_classification_pso(data_folds, label_folds, .7, 1.49, 1.49,
                                             .1, -.1, one_hidden_layer_size, len(test_data_folds[0][0]),
-                                            len(test_label_folds[0][0]), "classification", 1, 50))
+                                            len(test_label_folds[0][0]), "classification", 75, 50))
 
 
 # best_inertia, best_personal_weight, best_global_weight, best_max_velocity, best_min_velocity, best_population_size = (
@@ -160,7 +160,7 @@ def test_classification_dataset(dataset, one_hidden_layer_size, two_hidden_layer
     print("PSO two Hidden Layers")
     print(cross_validate_classification_pso(data_folds, label_folds, .7, 1.49, 1.49,
                                             .1, -.1, two_hidden_layer_size, len(test_data_folds[0][0]),
-                                            len(test_label_folds[0][0]), "classification", 1, 50))
+                                            len(test_label_folds[0][0]), "classification", 75, 50))
 
 
 def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_size):
@@ -193,7 +193,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print("Zero Layers GA:")
     print(cross_validate_regression_ga(test_data_folds, test_label_folds, .9, 0.01,
                                            [], len(test_data_folds[0][0]), 1,
-                                           "regression", 1, 30, 15))
+                                           "regression", 75, 30, 15))
 
     # best_crossover_rate, best_mutation_rate, best_population_size, best_tournament_size = (
     #     hyperparameter_tune_classification_ga(crossover_rates, mutation_rates, population_sizes,
@@ -203,7 +203,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print("One Layer GA:")
     print(cross_validate_regression_ga(test_data_folds, test_label_folds, .9, 0.05,
                                            one_hidden_layer_size, len(test_data_folds[0][0]), 1,
-                                           "regression", 1, 20, 10))
+                                           "regression", 75, 20, 10))
 
     # best_crossover_rate, best_mutation_rate, best_population_size, best_tournament_size = (
     #     hyperparameter_tune_classification_ga(crossover_rates, mutation_rates, population_sizes,
@@ -213,7 +213,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print("Two Layers GA:")
     print(cross_validate_regression_ga(test_data_folds, test_label_folds, .9, 0.01,
                                            two_hidden_layer_size, len(test_data_folds[0][0]), 1,
-                                           "regression", 1, 20, 10))
+                                           "regression", 75, 20, 10))
 
     # DIFFERENTIAL EVOLUTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -224,7 +224,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print("Zero Layers DE:")
     print(cross_validate_regression_de(test_data_folds, test_label_folds, .9, 0.01,
                                            [], len(test_data_folds[0][0]), 1,
-                                           "regression", 1, 20))
+                                           "regression", 75, 20))
 
     # best_crossover_rate, best_mutation_rate, best_population_size = (
     #     hyperparameter_tune_classification_de(crossover_rates, mutation_rates, population_sizes,
@@ -234,7 +234,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print("One Layer DE:")
     print(cross_validate_regression_de(test_data_folds, test_label_folds, .8, 0.01,
                                            one_hidden_layer_size, len(test_data_folds[0][0]), 1,
-                                           "regression", 1, 20))
+                                           "regression", 75, 20))
 
     # best_crossover_rate, best_mutation_rate, best_population_size = (
     #     hyperparameter_tune_classification_de(crossover_rates, mutation_rates, population_sizes,
@@ -244,7 +244,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print("Two Layers DE:")
     print(cross_validate_regression_de(test_data_folds, test_label_folds, .9, 0.01,
                                            two_hidden_layer_size, len(test_data_folds[0][0]), 1,
-                                           "regression", 1, 20))
+                                           "regression", 75, 20))
 
     # # Particle Swarm Optimization!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     #
@@ -258,7 +258,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print("PSO 0 Hidden Layers")
     print(cross_validate_regression_pso(data_folds, label_folds, .7, 1.49, 1.49,
                                             .1, -.1, [], len(test_data_folds[0][0]),
-                                            1, "regression", 1, 25))
+                                            1, "regression", 75, 25))
 
 #
     #
@@ -273,7 +273,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print(cross_validate_regression_pso(data_folds, label_folds, .7, 1.49,
                                             1.49,
                                             .1, -.1, [10], len(test_data_folds[0][0]),
-                                            1, "regression", 1, 25))
+                                            1, "regression", 75, 25))
     #
     # best_inertia, best_personal_weight, best_global_weight, best_max_velocity, best_min_velocity, best_population_size = (
     #     hyperparameter_tune_classification_pso(data_folds, label_folds, tune_data, tune_labels, inertias, p_weights,
@@ -285,7 +285,7 @@ def test_regression_dataset(dataset, one_hidden_layer_size, two_hidden_layer_siz
     print(cross_validate_regression_pso(data_folds, label_folds, .7, 1.49,
                                             1.49,
                                             .1, -.1, [10, 10], len(test_data_folds[0][0]),
-                                            1, "regression", 1, 25))
+                                            1, "regression", 75, 25))
     #
 
 
