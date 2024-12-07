@@ -33,155 +33,155 @@ classification_test_data, classification_test_labels, classification_train_data,
 
 # -----------------------------------------------REGRESSION GENETIC ALGORITHM----------------------------------------
 
-# regression_ga = GeneticAlgorithm(.01, .9, 20, 25, len(regression_train_data[0]), 1,
-#                                  [15, 5], "regression", regression_train_data, regression_train_labels)
-#
-# weight_vector = regression_ga.train(25)
-#
-# network = Network(2, [15, 5], len(regression_train_data[0]), 1, "regression", [])
-# network.update_weights(weight_vector)
-#
-# predictions = []
-# for data in regression_test_data:
-#     predictions.append(network.predict(data))
-#
-# print("GA MSE on Machine Dataset: ")
-# print(mean_squared_error(predictions, regression_test_labels, len(predictions)))
-# print()
+regression_ga = GeneticAlgorithm(.01, .9, 20, 25, len(regression_train_data[0]), 1,
+                                 [15, 5], "regression", regression_train_data, regression_train_labels)
+
+weight_vector = regression_ga.train(25)
+
+network = Network(2, [15, 5], len(regression_train_data[0]), 1, "regression", [])
+network.update_weights(weight_vector)
+
+predictions = []
+for data in regression_test_data:
+    predictions.append(network.predict(data))
+
+print("GA MSE on Machine Dataset: ")
+print(mean_squared_error(predictions, regression_test_labels, len(predictions)))
+print()
 
 # -----------------------------------------------CLASSIFICATION GENETIC ALGORITHM----------------------------------------
 
-# classification_ga = GeneticAlgorithm(.01, .9, 20, 25, len(classification_train_data[0]), len(classification_train_labels[0]),
-#                                  [15, 5], "classification", classification_train_data, classification_train_labels)
-#
-# weight_vector = classification_ga.train(25)
-#
-# network = Network(2, [15, 5], len(classification_train_data[0]), len(classification_train_labels[0]), "classification", [])
-# network.update_weights(weight_vector)
-#
-# predictions = []
-# for data in classification_test_data:
-#     predictions.append(network.predict(data))
-#
-# print("GA Accuracy on Soy Dataset: ")
-# acc_list, _ = accuracy(predictions, classification_test_labels)
+classification_ga = GeneticAlgorithm(.01, .9, 20, 25, len(classification_train_data[0]), len(classification_train_labels[0]),
+                                 [15, 5], "classification", classification_train_data, classification_train_labels)
 
-# print(acc_list)
-# print()
-#
+weight_vector = classification_ga.train(25)
+
+network = Network(2, [15, 5], len(classification_train_data[0]), len(classification_train_labels[0]), "classification", [])
+network.update_weights(weight_vector)
+
+predictions = []
+for data in classification_test_data:
+    predictions.append(network.predict(data))
+
+print("GA Accuracy on Soy Dataset: ")
+acc_list, _ = accuracy(predictions, classification_test_labels)
+
+print(acc_list)
+print()
+
 
 # -----------------------------------------------REGRESSION DIFFERENTIAL EVOLUTION----------------------------------------
 
 regression_de = DiffEvolution(.01, .9, 50, 25, len(regression_train_data[0]), 1,
                                  [15, 5], "regression", regression_train_data, regression_train_labels)
 
-# weight_vector = regression_de.train(1)
-#
-# network = Network(2, [15, 5], len(regression_train_data[0]), 1, "regression", [])
-# network.update_weights(weight_vector)
-#
-# predictions = []
-# for data in regression_test_data:
-#     predictions.append(network.predict(data))
-#
-# print("DE MSE on Machine Dataset: ")
-# print(mean_squared_error(predictions, regression_test_labels, len(predictions)))
-# print()
+weight_vector = regression_de.train(1)
+
+network = Network(2, [15, 5], len(regression_train_data[0]), 1, "regression", [])
+network.update_weights(weight_vector)
+
+predictions = []
+for data in regression_test_data:
+    predictions.append(network.predict(data))
+
+print("DE MSE on Machine Dataset: ")
+print(mean_squared_error(predictions, regression_test_labels, len(predictions)))
+print()
 
 # -----------------------------------------------CLASSIFICATION DIFFERENTIAL EVOLUTION----------------------------------------
 
-# classification_de = regression_de = DiffEvolution(.01, .9, 25, 50, len(classification_train_data[0]), len(classification_train_labels),
-#                                  [15, 5], "classification", classification_train_data, classification_train_labels)
-#
-# weight_vector = classification_de.train(1)
-#
-# network = Network(2, [15, 5], len(classification_train_data[0]), len(classification_train_labels[0]), "classification", [])
-# network.update_weights(weight_vector)
-#
-# predictions = []
-# for data in classification_test_data:
-#     predictions.append(network.predict(data))
-#
-# print("DE Accuracy on Soy Dataset: ")
-# acc_list, _ = accuracy(predictions, classification_test_labels)
-#
-# print(acc_list)
-# print()
-#
+classification_de = regression_de = DiffEvolution(.01, .9, 25, 50, len(classification_train_data[0]), len(classification_train_labels),
+                                 [15, 5], "classification", classification_train_data, classification_train_labels)
+
+weight_vector = classification_de.train(1)
+
+network = Network(2, [15, 5], len(classification_train_data[0]), len(classification_train_labels[0]), "classification", [])
+network.update_weights(weight_vector)
+
+predictions = []
+for data in classification_test_data:
+    predictions.append(network.predict(data))
+
+print("DE Accuracy on Soy Dataset: ")
+acc_list, _ = accuracy(predictions, classification_test_labels)
+
+print(acc_list)
+print()
+
 
 # -----------------------------------------------REGRESSION PARTICLE SWARM----------------------------------------
 
 
-# regression_pso = ParticleSwarm(50, .7, 1.49, 1.49, 0.1, -0.1,
-#                                len(regression_train_data[0]), 1, [15, 10], "regression", regression_train_data,
-#                                regression_train_labels)
-#
-# weight_vector = regression_pso.train(25)
-#
-# network = Network(2, [15, 5], len(regression_train_data[0]), 1, "regression", [])
-# network.update_weights(weight_vector)
-#
-# predictions = []
-# for data in regression_test_data:
-#     predictions.append(network.predict(data))
-#
-# print("PSO MSE on Machine Dataset: ")
-# print(mean_squared_error(predictions, regression_test_labels, len(predictions)))
-# print()
+regression_pso = ParticleSwarm(50, .7, 1.49, 1.49, 0.1, -0.1,
+                               len(regression_train_data[0]), 1, [15, 10], "regression", regression_train_data,
+                               regression_train_labels)
+
+weight_vector = regression_pso.train(25)
+
+network = Network(2, [15, 5], len(regression_train_data[0]), 1, "regression", [])
+network.update_weights(weight_vector)
+
+predictions = []
+for data in regression_test_data:
+    predictions.append(network.predict(data))
+
+print("PSO MSE on Machine Dataset: ")
+print(mean_squared_error(predictions, regression_test_labels, len(predictions)))
+print()
 
 # -----------------------------------------------CLASSIFICATION PARTICLE SWARM----------------------------------------
 
 
-# classification_pso = ParticleSwarm(50, .7, 1.49, 1.49, 0.1, -0.1,
-#                                len(classification_train_data[0]), len(classification_train_labels[0]), [15, 10],
-#                                "classification", classification_train_data, classification_train_labels)
-#
-# weight_vector = classification_pso.train(25)
-#
-# network = Network(2, [15, 5], len(regression_train_data[0]), len(classification_train_labels[0]), "classification", [])
-# network.update_weights(weight_vector)
-#
-# predictions = []
-# for data in regression_test_data:
-#     predictions.append(network.predict(data))
-#
-# print("PSO Accuracy on Soy dataset: ")
-#
-# acc_list, _ = accuracy(predictions, classification_test_labels)
-#
-# print(acc_list)
-# print()
+classification_pso = ParticleSwarm(50, .7, 1.49, 1.49, 0.1, -0.1,
+                               len(classification_train_data[0]), len(classification_train_labels[0]), [15, 10],
+                               "classification", classification_train_data, classification_train_labels)
+
+weight_vector = classification_pso.train(25)
+
+network = Network(2, [15, 5], len(regression_train_data[0]), len(classification_train_labels[0]), "classification", [])
+network.update_weights(weight_vector)
+
+predictions = []
+for data in regression_test_data:
+    predictions.append(network.predict(data))
+
+print("PSO Accuracy on Soy dataset: ")
+
+acc_list, _ = accuracy(predictions, classification_test_labels)
+
+print(acc_list)
+print()
 
 
 # -----------------------------------------------CLASSIFICATION BACKPROP ALGORITHM----------------------------------------
 
-# network = Network(2, [15, 5], len(classification_train_data[0]), len(classification_train_labels[0]), "classification", [])
-# network.train(classification_train_data, classification_train_labels, classification_test_data,
-#               classification_test_labels, 100, .1)
-#
-# predictions = []
-# for data in classification_test_data:
-#     predictions.append(network.predict(data))
-#
-# print("Backprop Accuracy: ")
-# acc_list, _ = accuracy(predictions, classification_test_labels)
-#
-# print(acc_list)
+network = Network(2, [15, 5], len(classification_train_data[0]), len(classification_train_labels[0]), "classification", [])
+network.train(classification_train_data, classification_train_labels, classification_test_data,
+              classification_test_labels, 100, .1)
+
+predictions = []
+for data in classification_test_data:
+    predictions.append(network.predict(data))
+
+print("Backprop Accuracy: ")
+acc_list, _ = accuracy(predictions, classification_test_labels)
+
+print(acc_list)
 
 
 # -----------------------------------------------REGRESSION BACKPROP ALGORITHM----------------------------------------
-#
-# network = Network(2, [15, 5], len(regression_train_data[0]), 1, "regression", [])
-# network.train(regression_train_data, regression_train_labels, regression_test_data,
-#               regression_test_labels, 100, .1)
-#
-# predictions = []
-# for data in regression_test_data:
-#     predictions.append(network.predict(data))
-#
-# print("Backprop MSE: ")
-#
-# print(mean_squared_error(predictions, regression_test_labels, len(predictions)))
+
+network = Network(2, [15, 5], len(regression_train_data[0]), 1, "regression", [])
+network.train(regression_train_data, regression_train_labels, regression_test_data,
+              regression_test_labels, 100, .1)
+
+predictions = []
+for data in regression_test_data:
+    predictions.append(network.predict(data))
+
+print("Backprop MSE: ")
+
+print(mean_squared_error(predictions, regression_test_labels, len(predictions)))
 
 
 

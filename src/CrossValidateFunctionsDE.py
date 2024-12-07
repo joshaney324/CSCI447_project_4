@@ -42,6 +42,7 @@ def cross_validate_classification_de(data_folds, label_folds, crossover_rate, mu
         test_data = np.array(test_data)
         test_labels = np.array(test_labels)
 
+        # Train the network
         de = DiffEvolution(mutation_rate, crossover_rate, population_size, max_iterations, num_inputs, num_outputs,
                            hidden_layer_sizes, output_type, train_data, train_labels)
 
@@ -74,8 +75,7 @@ def cross_validate_classification_de(data_folds, label_folds, crossover_rate, mu
             accuracy_vals.append(val[1])
 
         accuracy_avg += np.mean(accuracy_vals)
-        # Print final accuracy and return
-        # print(str(datetime.datetime.now()) + " Final Accuracy value: " + str(accuracy_avg / folds))
+
     return [precision_avg / folds, recall_avg / folds, accuracy_avg / folds]
 
 
@@ -128,8 +128,7 @@ def cross_validate_regression_de(data_folds, label_folds, crossover_rate, mutati
             predictions.append(network.predict(datapoint))
 
         mse_avg += mean_squared_error(test_labels, predictions, len(predictions))
-    # print mse average and return it
-    # print(str(datetime.datetime.now()) + " Final mse value: " + str(mse_avg / folds))
+
     return mse_avg / folds
 
 
@@ -248,6 +247,5 @@ def cross_validate_tune_classification(data_folds, label_folds, test_data, test_
         precision_avg += np.mean(precision_vals)
         recall_avg += np.mean(recall_vals)
         accuracy_avg += np.mean(accuracy_vals)
-    # print(str(datetime.datetime.now()) + " Accuracy value: " + str(accuracy_avg / folds))
-    # Return the metrics
+
     return (precision_avg / folds + recall_avg / folds + accuracy_avg / folds) / 3

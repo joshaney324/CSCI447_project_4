@@ -45,6 +45,8 @@ def cross_validate_classification_pso(data_folds, label_folds, inertia, personal
         test_data = np.array(test_data)
         test_labels = np.array(test_labels)
 
+        # Train Network
+
         pso = ParticleSwarm(population_size, inertia, personal_weight, global_weight, max_velocity, min_velocity,
                             len(train_data[0]), len(train_labels[0]), hidden_layer_sizes, "classification", train_data,
                             train_labels)
@@ -79,9 +81,7 @@ def cross_validate_classification_pso(data_folds, label_folds, inertia, personal
             accuracy_vals.append(val[1])
 
         accuracy_avg += np.mean(accuracy_vals)
-        # Print final accuracy and return
-        # print("1")
-        # print(str(datetime.datetime.now()) + " Final Accuracy value: " + str(accuracy_avg / folds))
+
     return [precision_avg / folds, recall_avg / folds, accuracy_avg / folds]
 
 
@@ -136,8 +136,7 @@ def cross_validate_regression_pso(data_folds, label_folds, inertia, personal_wei
             predictions.append(network.predict(datapoint))
 
         mse_avg += mean_squared_error(test_labels, predictions, len(predictions))
-    # print mse average and return it
-    # print(str(datetime.datetime.now()) + " Final mse value: " + str(mse_avg / folds))
+
     return mse_avg / folds
 
 
@@ -222,9 +221,8 @@ def cross_validate_tune_classification(data_folds, label_folds, tune_data, tune_
         test_data = np.array(tune_data)
         test_labels = np.array(tune_labels)
 
-        # (self, population_size, inertia, personal_weight, global_weight, max_velocity, min_velocity, num_inputs,
-        #  num_outputs, hidden_layer_sizes,
-        #  network_type, fitness_data, fitness_labels)
+
+        # Train network
         network = Network(len(hidden_layer_sizes), hidden_layer_sizes, num_inputs, num_outputs, output_type,
                           [])
 
@@ -260,6 +258,6 @@ def cross_validate_tune_classification(data_folds, label_folds, tune_data, tune_
         precision_avg += np.mean(precision_vals)
         recall_avg += np.mean(recall_vals)
         accuracy_avg += np.mean(accuracy_vals)
-    # print(str(datetime.datetime.now()) + " Accuracy value: " + str(accuracy_avg / folds))
+
     # Return the metrics
     return (precision_avg / folds + recall_avg / folds + accuracy_avg / folds) / 3

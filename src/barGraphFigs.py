@@ -250,7 +250,7 @@ for i, color in enumerate(colors):
 ax.set_xticks(x + bar_width)
 ax.set_xticklabels(labels, rotation=20, ha='right')
 ax.set_ylabel("Precision Values")
-ax.set_title("Comparison of Precision Values on the Soy Bean Dataset Across Neural Network Training Algorithms")
+ax.set_title("Comparison of Precision Values on the Glass Dataset Across Neural Network Training Algorithms")
 ax.legend(title="Hidden Layers", loc="upper right")
 ax.set_ylim(0, 1.4)
 

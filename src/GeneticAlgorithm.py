@@ -27,6 +27,8 @@ def mutate(individual, sigma, mutation_rate):
 class GeneticAlgorithm:
     def __init__(self, mutation_rate, crossover_rate, population_size, max_generations, num_inputs, num_outputs, hidden_layer_sizes,
                  network_type, fitness_data, fitness_labels):
+
+        # Instance Variables and hyperparameters
         self.crossover_rate = crossover_rate
         self.mutation_rate = mutation_rate
         self.population_size = population_size
@@ -61,13 +63,19 @@ class GeneticAlgorithm:
     def selection(self, tournament_size):
         individuals = []
 
+
+        # find two individuals from a tournament
         for j in range(2):
             orig_tournament = []
+
+            # complete a tournament
             for i in range(tournament_size):
                 orig_tournament.append(random.choice(list(self.fitness_dict.keys())))
 
             best_fitness = np.inf
             individual = []
+
+            # Select best individuals after tournament
             for idx in orig_tournament:
                 if self.fitness_dict[idx] < best_fitness:
                     best_fitness = self.fitness_dict[idx]
@@ -82,10 +90,13 @@ class GeneticAlgorithm:
 
         self.fitness_dict = {}
 
+        # Calculate fitness for each individual
         for i, individual in enumerate(self.population):
             self.network.update_weights(individual)
             self.fitness_dict[i] = self.network.fitness_function(self.fitness_data, self.fitness_labels)
 
+
+        # Sort the individual based off of fitness
         new_sorted_individuals = []
         for key in sorted(self.fitness_dict.items(), key=lambda x: x[1]):
             new_sorted_individuals.append(self.population[key[0]])
@@ -94,7 +105,6 @@ class GeneticAlgorithm:
 
     def train(self, tournament_size):
         for i in range(self.max_generations):
-            # print(i)
             # Select 2 individuals
             selected_individuals = self.selection(tournament_size)
             new_individual = None

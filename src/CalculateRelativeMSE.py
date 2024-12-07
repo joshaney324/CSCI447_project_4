@@ -5,6 +5,8 @@ from Abalone import AbaloneSet
 from ForestFires import ForestFiresSet
 from Metric_functions import mean_squared_error
 
+# This is meant to calculate the relative mean squared error for all the regression datasets
+
 machine = MachineSet()
 abalone = AbaloneSet()
 forest = ForestFiresSet()
@@ -18,7 +20,7 @@ for label in machine_labels:
     machine_mean += label
 
 machine_mean /= len(machine_labels)
-# print(machine_mean)
+
 
 predictions = []
 for label in machine_labels:
@@ -35,7 +37,6 @@ for label in abalone_labels:
 
 abalone_mean /= len(abalone_labels)
 
-# print(abalone_mean)
 
 predictions = []
 for label in abalone_labels:
@@ -52,7 +53,7 @@ for label in forest_labels:
     forest_mean += label
 
 forest_mean /= len(forest_labels)
-# print(forest_mean)
+
 
 predictions = []
 for label in forest_labels:
